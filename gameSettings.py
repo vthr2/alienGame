@@ -4,6 +4,7 @@ Created on Mon Oct  5 15:50:23 2020
 
 @author: LethalValdi
 """
+import pygame
 
 class GameSettings():
     
@@ -18,3 +19,6 @@ class GameSettings():
         self.bulletHeight = 15
         self.bulletColor = 50,150,50
         self.speed =3
+        self.counter = 30
+
+        

@@ -14,7 +14,7 @@ class Alien(Sprite):
         super().__init__()
         self.speeds = ['Slow', 'Slow','Slow','Medium' 'Medium' , "Fast"]
         self.colors = ['Green','Green', 'Green', 'Blue', 'Red', "Red"]
-        self.names = ['Sylvester', "ET", "T-1000", "T-800", "Johnny", "Dutch", "Komodo Joe", "Space Commander Jack", "Imposter","Menace", "Villain", "Terrestrial", "Destroyer", "Cosmonaut", "Soviet", "KlausTheNaziAlien", "ThirdKind", "Predator", "Titan", "Europa", "Deimos", "PlutoThePlanet", "DrAlien", "NeuralNetAlien", "JohnConnor", "CrystalSkull", "James", "TheGary", "FinalBoss2", "Colonel Cosmos", "Carl", "Justin", "Chris the friendly alien", "Chris the nonfriendly alien" , "Furious George", "The Octoalien"]
+        self.names = ['Sylvester', "ET", "T-1000", "T-800", "Johnny", "Dutch", "Komodo Joe", "Space Commander Jack", "Imposter","Menace", "Villain", "Terrestrial", "Destroyer", "Cosmonaut", "Soviet", "KlausTheNaziAlien", "ThirdKind", "Predator", "Titan", "Europa", "Deimos", "PlutoThePlanet", "DrAlien", "NeuralNetAlien", "JohnConnor", "CrystalSkull", "James", "TheGary", "FinalBoss2", "Colonel Cosmos", "Carl", "Justin", "Chris the friendly alien", "Chris the unfriendly alien" , "Furious George", "The Octoalien"]
         self.name = random.choice(self.names)
         self.color = random.choice(self.colors)
         self.idNum = idNum
@@ -30,12 +30,15 @@ class Alien(Sprite):
         self.theNum = 0
         if(self.color == 'Green'):
             self.speed = 4
+            self.points = 1
             self.image = pygame.image.load('images/greenalien.png')
         if(self.color == 'Blue'):
             self.speed = 10
+            self.points = 5
             self.image = pygame.image.load('images/bluealien.png')
         if(self.color == 'Red'):
             self.speed = 7
+            self.points = 3
             self.image = pygame.image.load('images/redalien.png')
         
         for number in range(20):
@@ -91,46 +94,35 @@ class Alien(Sprite):
     def update(self):
         self.updatePos()
                 
-        
+    def drawStaticAliens(self):
+        self.image = pygame.image.load('images/greenalien.png')
+        self.image= pygame.transform.scale(self.image, (self.radius, self.radius))
+        self.rect = self.image.get_rect()
+        #Set position
+        self.rect.x = 100
+        self.rect.y = 600
 
-class MovingAlien(Alien):
-    
-    def __init__(self):
-        super().__init__()
-        self.randomNumY = []
-        self.randomNumX = []
-        for i in range(1200):
-            self.randomNumX.append(i)
-        for i in range(800):
-            self.randomNumY.append(i)
-            
-        self.XPos = random.choice(self.randomNumX)
-        self.YPos = random.choice(self.randomNumY)
-        self.rect.x = self.XPos
-        self.rect.y = self.YPos
+
+        self.image3 = pygame.image.load('images/redalien.png')
+        self.image3= pygame.transform.scale(self.image3, (self.radius, self.radius))
+        self.rect3 = self.image3.get_rect()
+        #Set position
+        self.rect3.x = 500
+        self.rect3.y = 600
         
         
-    def printPos(self):
-        print("X position is: " + str(self.XPos)+ "Y position is: "+str(self.YPos))
+        self.image2 = pygame.image.load('images/bluealien.png')
+        self.image2= pygame.transform.scale(self.image2, (self.radius, self.radius))
+        self.rect2 = self.image2.get_rect()
+        #Set position
+        self.rect2.x = 900
+        self.rect2.y = 600
         
-    def updatePos(self):
-        ranNum = random.choice(self.randomNumY)
-        
-        
-        if(ranNum <200):
-            self.XPos +=5
-        elif(ranNum <400 ):
-            self.XPos -= 5
-        elif(ranNum<600):
-            self.YPos += 5
-        else:
-            self.YPos -= 5
-        self.printPos()
-    
-    def drawAlien(self):
         self.screen.blit(self.image,self.rect)
-        
-        
+        self.screen.blit(self.image2,self.rect2)
+        self.screen.blit(self.image3,self.rect3)
+    
+  
         
 def position2(ranNum,rect,speed):
     if(ranNum ==1):
@@ -195,43 +187,8 @@ def position2(ranNum,rect,speed):
                 rect.y += speed
     
 
-def position(ranNum,ranNum2,randomMove2, rect):
-    if(ranNum ==1):
-        while(ranNum2 != 2):
-            if(rect.x < 1150):
-                rect.x +=1
-            else:
-                ranNum = 2
-            ranNum2 = random.choice(randomMove2)
-    elif(ranNum == 2):
-        while(ranNum2 != 2):
-            if(rect.x > 50):
-                rect.x -= 1
-            else:
-                rect.x += 1
-                ranNum = 2
-            ranNum2 = random.choice(randomMove2)
-    elif(ranNum== 3):
-        while(ranNum2 != 2):
-            if(rect.y < 750):
-                rect.y += 1
-            else:
-                rect.y -= 1
-                ranNum = 2
-            ranNum2 = random.choice(randomMove2)
-    else:
-        while(ranNum2 != 2):
-            if(rect.y > 50):
-                rect.y -= 1
-            else:
-                rect.y += 1
-                ranNum = 2
-                        
-            ranNum2 =random.choice(randomMove2)
-    
-# I think the jerky movement might be because alien is moving forwards and backwards
-# Cannot loop many times in each position call because then the movement will be like teleporting
-# Want movement to be smooth not like a teleporter.
+#Calculate proportion of aliens, unfinished and unused, might be used in a later version. Where after a player has finished round
+#Statistics could be displayed after finish of game
 def countStats(alienArr):
     counter = 0
     counter2= 0
