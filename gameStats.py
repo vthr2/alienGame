@@ -5,29 +5,30 @@ Created on Thu Oct  8 16:30:29 2020
 @author: LethalValdi
 """
 import pygame
-
-
+from alienSettings import resource_path
 
 
 class Stats():
+    """Function for counting stats, does not do much at movement but plan was to show player how many of each alien he clicked when game is over"""
     def __init__(self,gameSettings):
         self.gameSettings = gameSettings
-        self.activateGame = False
-        self.userName = False
+        self.activateGame = False #We activate game and deactivate game with this boolean
+        self.userName = False #Not used
         self.currentScore = 0
-        self.gameOver = False
+        self.gameOver = False 
 
 class Button():
     def __init__(self, gameSettings,screen,msg,xCor,yCor,fontSize):
-        """Initialize starting button"""
+        """Initialize start and quit button"""
         self.screen = screen
         self.screenRect = screen.get_rect()
-        #Create Button
-        self.width, self.height = 200,80
+        #Create Button and select color, size et cetera
+        self.width, self.height = 200,60
         self.buttonColor = (0,0,0)
-        self.textColor = (255,255,255)
+        self.textColor = (150,0,255)
         self.fontSize = fontSize
-        self.font = pygame.font.SysFont('alienencounters',self.fontSize)
+        font = resource_path('fonts/alienfont.ttf')
+        self.font = pygame.font.Font(font,self.fontSize)
         self.rect = pygame.Rect(600,400, self.width, self.height)
         self.rect.x = xCor
         self.rect.y = yCor
@@ -41,7 +42,8 @@ class Button():
        self.msgImageRect.y = yCor
 
     def drawButton(self):
+        """Draw Button"""
         self.screen.fill(self.buttonColor, self.rect)
         self.screen.blit(self.msgImage,self.msgImageRect)
-        
+ 
         
